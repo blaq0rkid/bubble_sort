@@ -1,18 +1,50 @@
-def bubble_sort(array)
-  bubble_sort_by(array) { |left, right| right - left }
+def bubble_sort arr
+
+len = arr.size
+
+while true
+	noSwaps =0
+	for i in (0..len-1)
+		if(i!=len-1 && arr[i]>arr[i+1] )
+			noSwaps +=1
+			arr[i] , arr[i+1] = arr[i+1] , arr[i]
+			
+		end
+	end
+
+	if noSwaps==0
+		break
+	end
+
 end
 
-def bubble_sort_by(array, &block)
-  i = 1
-  while array.size - i > 0 do
-    j = 0
-    while j < array.size - i do
-      box = array.slice!(j, 2)
-      box.rotate! if block.call(box.first, box.last) < 0
-      array.insert(j, box).flatten!
-      j += 1
-    end
-    i += 1
-  end
-  array
+
+return arr
+
 end
+
+
+
+puts bubble_sort [4,3,78,2,0,2]
+
+
+
+####################################   bubble_sort_by ######################
+
+def bubble_sort_by(array) 
+  counter = array.size - 1
+
+  while counter > 0
+    1.upto(counter) do |number|
+      if yield(array[number - 1], array[number]) < 0
+        array[number - 1], array[number] = array[number], array[number - 1]
+      end
+    end
+    counter -= 1
+  end
+
+  return array
+end
+
+
+puts bubble_sort_by(["hi","hello","hey"]) { |left, right| right.length - left.length }
